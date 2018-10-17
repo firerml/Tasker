@@ -135,14 +135,15 @@ def post_in_channel(text, channel, attachments=None):
 def complete_task(event):
     # TODO: Return 200 immediately and do all of this asyncronously.
     assignee_id = event['user']['id']
-    channel_id = event['channel']['id']
     task_id, assigner_id, task_description = event['actions'][0]['value'].split(',')
 
     db_success = DB.delete_task(int(task_id))
     if db_success:
         # Notify assigner of completion (as long as the assigner isn't the assignee!).
         if not assigner_id == assignee_id:
-            post_in_channel(f'<@{assignee_id}> has completed this task:\n>{task_description}', channel_id)
+            channel_id = get_channel_id_for_user_direct_message(assigner_id)
+            if channel_id:
+                post_in_channel(f'<@{assignee_id}> has completed this task:\n>{task_description}', channel_id)
         # Update the message to cross it out and remove the button.
         completed_attachment_id = int(event['attachment_id'])
         original_message = event['original_message']
