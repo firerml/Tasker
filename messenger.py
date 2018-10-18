@@ -15,9 +15,7 @@ class Messenger:
     SEE_TASKS_REGEX = r'(see\s+)?(all\s+)?tasks.*'
 
     BACKEND_ERROR_MESSAGE = '*Oops!* There was an error on our end. Try again or email firerml@gmail.com for support.'
-    # TODO: Make the bot respond to "help" with this message.
-    HINT_TEXT = 'Try something like `assign @user to order lunch` or `tasks`'
-    ERROR_WITH_HINT_TEXT = f'*Oops!* {HINT_TEXT}'
+    HINT_TEXT = 'Try something like `assign @user to order lunch` or `tasks`!'
 
     ERROR_RESPONSE = Response(BACKEND_ERROR_MESSAGE, status=500)
 
@@ -36,7 +34,7 @@ class Messenger:
         elif user_intent == self.TASKS_INTENT:
             res_text, attachments = self.get_assigned_tasks(user_id)
         else:
-            res_text = self.ERROR_WITH_HINT_TEXT
+            res_text = self.HINT_TEXT
         return res_text, attachments
 
     # TODO: Add functionality to support "assign task to @user"

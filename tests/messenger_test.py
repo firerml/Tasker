@@ -67,7 +67,7 @@ class MessengerTest(TestCase):
                 for message in ['blah', 'see', 'see all']:
                     res_text, attachments = self.messenger.fulfill_user_intent(message, user_id)
 
-                    self.assertEqual(self.messenger.ERROR_WITH_HINT_TEXT, res_text)
+                    self.assertEqual(self.messenger.HINT_TEXT, res_text)
                     self.assertEqual([], attachments)
                     self.assertFalse(get_assigned_tasks_mock.called)
                     self.assertFalse(assign_task_mock.called)
